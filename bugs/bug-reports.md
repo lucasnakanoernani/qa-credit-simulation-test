@@ -1,4 +1,7 @@
-# Registro de Bugs
+# Registro de bugs
+
+Relatos históricos preservados do teste técnico. Data de execução, versão do navegador e sistema operacional não constam no registro original. O comportamento atual e a correção dos problemas não foram revalidados nesta revisão.
+
 
 ## Bug 01 – Página em branco ao clicar no logo do Banco do Brasil 
 
@@ -8,7 +11,7 @@
 3. Clicar no logo do Banco do Brasil
 
 **Resultado Esperado:**
-Sistema deve retornar a página inicial.
+O clique deve levar ao destino previsto pelo produto, sem deixar a página em branco. O registro original esperava a página inicial; esse destino precisa ser confirmado como critério de aceitação.
 
 **Resultado Atual:**
 Página retorna em branco.
@@ -18,7 +21,7 @@ Média
 
 **Evidência:**
 
-![Página em branco](/evidences/pagina_em_branco.png)
+![Página em branco](../evidences/pagina_em_branco.png)
 
 ## Bug 02 – CPF com código de erro
 
@@ -31,14 +34,16 @@ Média
 Sistema deve retornar mensagem de CPF inválido.
 
 **Resultado Atual:**
-Sistema retorna mensagem de CPF inválido acompanhada de código técnico, o que pode causar confusão ao usuário final.
+No registro original, o sistema exibe uma mensagem de CPF inválido acompanhada de um código técnico. A classificação como problema de usabilidade precisa considerar se esse código tem finalidade de suporte prevista pelo produto.
 
 **Severidade:**
 Baixa
 
 **Evidência:**
 
-![Página em branco](/evidences/cpf_codigo_erro.png)
+![Mensagem de CPF inválido com código técnico](../evidences/cpf_codigo_erro.png)
 
 ## Observação
-Os bugs identificados impactam principalmente a experiência do usuário, não comprometendo diretamente o fluxo principal da simulação.
+Os relatos indicam possíveis impactos na experiência do usuário. As evidências disponíveis não permitem concluir o impacto sobre todo o fluxo. As severidades são as classificações originais e devem ser reavaliadas após reprodução.
+
+Para cada nova reprodução, registrar: data e horário, URL, navegador e versão, sistema operacional, massa fictícia identificada, frequência de ocorrência e nova evidência.

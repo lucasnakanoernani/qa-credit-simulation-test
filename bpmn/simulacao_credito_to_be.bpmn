@@ -1,0 +1,168 @@
+<?xml version='1.0' encoding='utf-8'?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_credit" targetNamespace="https://github.com/lucasnakanoernani/qa-credit-simulation-test">
+  <bpmn:process id="CreditSimulation" name="Simulação de crédito — processo proposto" isExecutable="false">
+    <bpmn:documentation>Proposta de fluxo; não descreve validações internas confirmadas do banco. Dados corrigidos retornam à validação. Resultado de simulação não implica aprovação definitiva de crédito.</bpmn:documentation>
+    <bpmn:startEvent id="start" name="Início">
+      <bpmn:outgoing>Flow_0</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:task id="access" name="Acessar o simulador">
+      <bpmn:incoming>Flow_0</bpmn:incoming>
+      <bpmn:outgoing>Flow_1</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="fill" name="Preencher dados">
+      <bpmn:incoming>Flow_1</bpmn:incoming>
+      <bpmn:outgoing>Flow_2</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="validate" name="Validar os dados">
+      <bpmn:incoming>Flow_2</bpmn:incoming>
+      <bpmn:outgoing>Flow_3</bpmn:outgoing>
+      <bpmn:incoming>Flow_6</bpmn:incoming>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="valid" name="Dados válidos?">
+      <bpmn:incoming>Flow_3</bpmn:incoming>
+      <bpmn:outgoing>Flow_4</bpmn:outgoing>
+      <bpmn:outgoing>Flow_7</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="error" name="Informar campos inválidos">
+      <bpmn:incoming>Flow_4</bpmn:incoming>
+      <bpmn:outgoing>Flow_5</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="correct" name="Corrigir os dados">
+      <bpmn:incoming>Flow_5</bpmn:incoming>
+      <bpmn:outgoing>Flow_6</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="process" name="Processar a simulação">
+      <bpmn:incoming>Flow_7</bpmn:incoming>
+      <bpmn:outgoing>Flow_8</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="result" name="Resultado disponível?">
+      <bpmn:incoming>Flow_8</bpmn:incoming>
+      <bpmn:outgoing>Flow_9</bpmn:outgoing>
+      <bpmn:outgoing>Flow_10</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="show" name="Exibir resultado da simulação">
+      <bpmn:incoming>Flow_9</bpmn:incoming>
+      <bpmn:outgoing>Flow_11</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="reject" name="Informar impossibilidade de simular">
+      <bpmn:incoming>Flow_10</bpmn:incoming>
+      <bpmn:outgoing>Flow_12</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="endYes" name="Fim">
+      <bpmn:incoming>Flow_11</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:endEvent id="endNo" name="Fim">
+      <bpmn:incoming>Flow_12</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0" sourceRef="start" targetRef="access" name="" />
+    <bpmn:sequenceFlow id="Flow_1" sourceRef="access" targetRef="fill" name="" />
+    <bpmn:sequenceFlow id="Flow_2" sourceRef="fill" targetRef="validate" name="" />
+    <bpmn:sequenceFlow id="Flow_3" sourceRef="validate" targetRef="valid" name="" />
+    <bpmn:sequenceFlow id="Flow_4" sourceRef="valid" targetRef="error" name="Não" />
+    <bpmn:sequenceFlow id="Flow_5" sourceRef="error" targetRef="correct" name="" />
+    <bpmn:sequenceFlow id="Flow_6" sourceRef="correct" targetRef="validate" name="Revalidar" />
+    <bpmn:sequenceFlow id="Flow_7" sourceRef="valid" targetRef="process" name="Sim" />
+    <bpmn:sequenceFlow id="Flow_8" sourceRef="process" targetRef="result" name="" />
+    <bpmn:sequenceFlow id="Flow_9" sourceRef="result" targetRef="show" name="Sim" />
+    <bpmn:sequenceFlow id="Flow_10" sourceRef="result" targetRef="reject" name="Não" />
+    <bpmn:sequenceFlow id="Flow_11" sourceRef="show" targetRef="endYes" name="" />
+    <bpmn:sequenceFlow id="Flow_12" sourceRef="reject" targetRef="endNo" name="" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diagram_credit">
+    <bpmndi:BPMNPlane id="Plane_credit" bpmnElement="CreditSimulation">
+      <bpmndi:BPMNShape id="start_di" bpmnElement="start">
+        <dc:Bounds x="410" y="35" width="40" height="40" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="access_di" bpmnElement="access">
+        <dc:Bounds x="330" y="115" width="200" height="64" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="fill_di" bpmnElement="fill">
+        <dc:Bounds x="330" y="225" width="200" height="64" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="validate_di" bpmnElement="validate">
+        <dc:Bounds x="330" y="335" width="200" height="64" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="valid_di" bpmnElement="valid">
+        <dc:Bounds x="370" y="449" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="error_di" bpmnElement="error">
+        <dc:Bounds x="710" y="457" width="220" height="64" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="correct_di" bpmnElement="correct">
+        <dc:Bounds x="710" y="335" width="220" height="64" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="process_di" bpmnElement="process">
+        <dc:Bounds x="330" y="579" width="200" height="64" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="result_di" bpmnElement="result">
+        <dc:Bounds x="370" y="694" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="show_di" bpmnElement="show">
+        <dc:Bounds x="100" y="840" width="240" height="70" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="reject_di" bpmnElement="reject">
+        <dc:Bounds x="600" y="840" width="240" height="70" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="endYes_di" bpmnElement="endYes">
+        <dc:Bounds x="200" y="975" width="40" height="40" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="endNo_di" bpmnElement="endNo">
+        <dc:Bounds x="700" y="975" width="40" height="40" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0_di" bpmnElement="Flow_0">
+        <di:waypoint x="430" y="75" />
+        <di:waypoint x="430" y="115" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1_di" bpmnElement="Flow_1">
+        <di:waypoint x="430" y="179" />
+        <di:waypoint x="430" y="225" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_2_di" bpmnElement="Flow_2">
+        <di:waypoint x="430" y="289" />
+        <di:waypoint x="430" y="335" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_3_di" bpmnElement="Flow_3">
+        <di:waypoint x="430" y="399" />
+        <di:waypoint x="430" y="449" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_4_di" bpmnElement="Flow_4">
+        <di:waypoint x="490" y="489" />
+        <di:waypoint x="710" y="489" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_5_di" bpmnElement="Flow_5">
+        <di:waypoint x="820" y="457" />
+        <di:waypoint x="820" y="399" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_6_di" bpmnElement="Flow_6">
+        <di:waypoint x="710" y="367" />
+        <di:waypoint x="530" y="367" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_7_di" bpmnElement="Flow_7">
+        <di:waypoint x="430" y="529" />
+        <di:waypoint x="430" y="579" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_8_di" bpmnElement="Flow_8">
+        <di:waypoint x="430" y="644" />
+        <di:waypoint x="430" y="694" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_9_di" bpmnElement="Flow_9">
+        <di:waypoint x="370" y="734" />
+        <di:waypoint x="220" y="734" />
+        <di:waypoint x="220" y="840" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_10_di" bpmnElement="Flow_10">
+        <di:waypoint x="490" y="734" />
+        <di:waypoint x="720" y="734" />
+        <di:waypoint x="720" y="840" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_11_di" bpmnElement="Flow_11">
+        <di:waypoint x="220" y="910" />
+        <di:waypoint x="220" y="975" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_12_di" bpmnElement="Flow_12">
+        <di:waypoint x="720" y="910" />
+        <di:waypoint x="720" y="975" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
